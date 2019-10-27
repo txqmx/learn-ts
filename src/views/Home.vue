@@ -1,18 +1,49 @@
+<!--suppress ALL -->
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ul>
+      <li v-for="(item,index) in lists" :key="index">
+        <TodoItem :item="item" :index =index @say="say"></TodoItem>
+      </li>
+    </ul>
+    {{this.count}}{{this.lists}}
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { Component, Vue } from 'vue-property-decorator';
+import TodoItem from '../components/TodoItem';
+import {ITodo} from '../types/todo';
+import {State} from 'vuex-class'
 
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
+
+@Component({
+    name : 'home',
+    components: {
+        TodoItem,
+    },
+})
+
+export default class Home extends Vue {
+    @State('lists') public  lists !:[];
+    // ts 类中需要有修饰符 public private protected
+
+  // data中的数据
+  // public lists: ITodo[] = [
+  //     {text: '吃饭', complete: false},
+  //     {text: '睡觉', complete: true},
+  // ];
+  // 生命周期
+  public mounted(){
+      console.log(1);
+  }
+  // 计算属性
+  get count() {
+      return this.lists.length;
+  }
+  say(msg: string):void{
+      console.log(msg);
   }
 }
 </script>

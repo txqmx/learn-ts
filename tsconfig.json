@@ -1,4 +1,6 @@
 {
+  // 增加了类型校验
+  // vue + jsx + ts => tsx
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
